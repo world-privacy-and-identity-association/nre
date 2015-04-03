@@ -1,0 +1,35 @@
+. structure
+
+genKey(){ #subj, internalName
+    openssl genrsa -out $2.key ${KEYSIZE}
+    openssl req -new -key $2.key -out $2.csr -subj "$1/O=Test Environment CA Ltd./OU=Test Environment CAs"
+
+}
+
+genca(){ #subj, internalName
+    mkdir $2.ca
+
+    genKey "$1" "$2.ca/key"
+    
+    mkdir $2.ca/newcerts
+    echo 01 > $2.ca/serial
+    touch $2.ca/db
+    echo unique_subject = no >$2.ca/db.attr
+
+}
+
+caSign(){ # csr,ca,config,start,end
+    start="$4"
+    end="$5"
+    [ "$start" != "" ] && start="-startdate $start"
+    [ "$end" != "" ] && end="-enddate $end"
+    [ "$start" == "" -a "$end" == "" ] && start="-days 366"
+    BASE="$PWD"
+    echo "Signing: $1 with $2"
+    echo "$start $end"
+    pushd $2.ca > /dev/null
+    openssl ca -cert key.crt -keyfile key.key -in "$BASE/$1.csr" -out "$BASE/$1.crt" -batch -config "$BASE/selfsign.config" -extfile "$BASE/$3" $start $end
+    popd > /dev/null
+    echo "Signed"
+}
+

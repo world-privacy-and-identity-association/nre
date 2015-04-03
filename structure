@@ -1,0 +1,9 @@
+#!/bin/sh
+DOMAIN="cacert.local"
+KEYSIZE=4096
+PRIVATEPW="changeit"
+
+[ -f config ] && . ./config
+
+STRUCT_CAS="env unassured assured codesign orga orgaSign"
+SERVER_KEYS="api secure www static signer_server signer_client"
