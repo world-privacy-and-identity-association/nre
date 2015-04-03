@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 [ "$1" == "" ] && echo "Usage: $0 <year>" && exit 1

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # this script generates a set of sample keys
 set -e
 
