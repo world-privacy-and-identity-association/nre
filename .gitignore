@@ -1,0 +1,11 @@
+*.csr
+*.crt
+*.key
+*.pkcs12
+*.ca
+*.crl
+config
+
+
+# Editor files
+*~
