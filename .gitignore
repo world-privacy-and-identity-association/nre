@@ -4,6 +4,7 @@
 *.pkcs12
 *.ca
 *.crl
+*.tar.gz
 config
 
 
