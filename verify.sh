@@ -33,8 +33,8 @@ for ca in ${STRUCT_CAS}; do
 	else
 	    CA_FILE=$year/ca/${ca}_${year}_${i}.crt
 	fi
-	time=${year:2}${points[${i}]}
-	timestamp=$(date --date="${time:2:2}/${time:4:2}/${time:0:2} 03:00:00 UTC" +"%s")
+	time=${points[${i}]}
+	timestamp=$(date --date="${time:0:2}/${time:2:2}/${year} 03:00:00 UTC" +"%s")
 	verify "$CA_FILE" "$ca.ca/key.crt" "-attime ${timestamp}"
 	openssl x509 -in "$CA_FILE" -noout -text | grep "CA Issuers" | grep "/$ca.crt" > /dev/null || error "CA Issuers field is wrong for $ca"
 	openssl x509 -in "$CA_FILE" -noout -text | grep "Subject: " | grep "CN=$name" > /dev/null || error "Subject field did not verify"

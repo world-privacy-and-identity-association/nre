@@ -42,7 +42,7 @@ TESTCA
 genserver(){ #key, subject, config
     openssl genrsa -out $1.key ${KEYSIZE}
     openssl req -new -key $1.key -out $1.csr -subj "$2"
-    caSign $1 $year/ca/env_${year}_1 "$3"
+    caSign $1 $year/ca/env_${year}_1 "$3" "${year}${points[1]}" "$((${year} + 2))${points[1]}"
     
     openssl pkcs12 -inkey $1.key -in $1.crt -CAfile env.chain.crt -chain -name $1 -export -passout pass:changeit -out $1.pkcs12
     

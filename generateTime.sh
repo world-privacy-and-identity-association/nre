@@ -21,8 +21,8 @@ TESTCA
 mkdir -p $year/ca
 
 
-STARTDATE="${year:2}"
-ENDDATE="$((${year:2} + 2))"
+STARTDATE="${year}"
+ENDDATE="$((${year} + 2))"
 
 for i in $TIME_IDX; do
     point=${points[${i}]}
