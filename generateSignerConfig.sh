@@ -19,8 +19,10 @@ installCommKeys() { # peer (server,client)
 mkdir -p signer-config
 for ca in $STRUCT_CAS; do
     [ "$ca" == "env" ] && continue
-    mkdir -p signer-config/ca/${ca}_${year}_1
-    cp ${year}/ca/${ca}_${year}_1.crt  signer-config/ca/${ca}_${year}_1/ca.crt
+    for i in $TIME_IDX; do
+	mkdir -p signer-config/ca/${ca}_${year}_${i}
+	cp ${year}/ca/${ca}_${year}_${i}.crt  signer-config/ca/${ca}_${year}_${i}/ca.crt
+    done
 done
 
 installCommKeys client
@@ -32,7 +34,9 @@ rm signer-config/keys/signer_*
 
 for ca in $STRUCT_CAS; do
     [ "$ca" == "env" ] && continue
-    cp ${year}/ca/${ca}_${year}_1.key  signer-config/ca/${ca}_${year}_1/ca.key
+    for i in $TIME_IDX; do
+	cp ${year}/ca/${ca}_${year}_${i}.key  signer-config/ca/${ca}_${year}_${i}/ca.key
+    done
 done
 
 installCommKeys server

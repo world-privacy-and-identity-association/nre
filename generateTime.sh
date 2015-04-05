@@ -20,16 +20,20 @@ TESTCA
 
 mkdir -p $year/ca
 
-STARTDATE="${year:2}0101000000Z"
-ENDDATE="$((${year:2} + 2))0101000000Z"
 
-. CAs/env
-genca "/CN=$name ${year}-1" $year/ca/env_${year}_1
-genTimeCA $year/ca/env_${year}_1.ca/key env "$STARTDATE" "$ENDDATE"
+STARTDATE="${year:2}"
+ENDDATE="$((${year:2} + 2))"
 
-for ca in $STRUCT_CAS; do
-    [ "$ca" == "env" ] && continue
-    . CAs/$ca
-    genKey "/CN=$name ${year}-1" $year/ca/${ca}_${year}_1
-    genTimeCA $year/ca/${ca}_${year}_1 $ca "$STARTDATE" "$ENDDATE"
+for i in $TIME_IDX; do
+    point=${points[${i}]}
+    . CAs/env
+    genca "/CN=$name ${year}-${i}" $year/ca/env_${year}_${i}
+    genTimeCA $year/ca/env_${year}_${i}.ca/key env "$STARTDATE$point" "$ENDDATE$point"
+    
+    for ca in $STRUCT_CAS; do
+	[ "$ca" == "env" ] && continue
+	. CAs/$ca
+	genKey "/CN=$name ${year}-${i}" $year/ca/${ca}_${year}_${i}
+	genTimeCA $year/ca/${ca}_${year}_${i} $ca "$STARTDATE$point" "$ENDDATE$point"
+    done
 done

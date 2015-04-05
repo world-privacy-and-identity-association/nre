@@ -5,8 +5,10 @@ year=$1
 
 . structure
 
-verify(){ # CAfile, crt
-    openssl verify -CAfile "$1" "$2" || error "$2 did not verify"
+verify(){ # crt, [untrusted], additional
+    untrusted="$2"
+    [[ "$untrusted" != "" ]] && untrusted="-untrusted $untrusted"
+    openssl verify $3 -CAfile root.ca/key.crt $untrusted "$1" || error "$1 did not verify"
 }
 
 error() { # message
@@ -15,31 +17,35 @@ error() { # message
 }
 
 # Verify root
-verify root.ca/key.crt root.ca/key.crt
+verify root.ca/key.crt
 
 # Verify level-1 structure
-for i in $STRUCT_CAS; do
-    verify root.ca/key.crt $i.ca/key.crt
+for ca in $STRUCT_CAS; do
+    verify $ca.ca/key.crt
 done
 
 # Verify level-2 (time) structure
-for i in $STRUCT_CAS; do
-    . CAs/$i
-    if [ "$i" == "env" ]; then
-	CA_FILE=$year/ca/${i}_${year}_1.ca/key.crt
-    else
-	CA_FILE=$year/ca/${i}_${year}_1.crt
-    fi
-    verify <(cat root.ca/key.crt $i.ca/key.crt) "$CA_FILE"
-    openssl x509 -in "$CA_FILE" -noout -text | grep "CA Issuers" | grep "/$i.crt" > /dev/null || error "CA Issuers field is wrong for $i"
-    openssl x509 -in "$CA_FILE" -noout -text | grep "Subject: " | grep "CN=$name" > /dev/null || error "Subject field did not verify"
+for ca in ${STRUCT_CAS}; do
+    for i in $TIME_IDX; do
+	. CAs/$ca
+	if [ "$ca" == "env" ]; then
+	    CA_FILE=$year/ca/${ca}_${year}_${i}.ca/key.crt
+	else
+	    CA_FILE=$year/ca/${ca}_${year}_${i}.crt
+	fi
+	time=${year:2}${points[${i}]}
+	timestamp=$(date --date="${time:2:2}/${time:4:2}/${time:0:2} 03:00:00 UTC" +"%s")
+	verify "$CA_FILE" "$ca.ca/key.crt" "-attime ${timestamp}"
+	openssl x509 -in "$CA_FILE" -noout -text | grep "CA Issuers" | grep "/$ca.crt" > /dev/null || error "CA Issuers field is wrong for $ca"
+	openssl x509 -in "$CA_FILE" -noout -text | grep "Subject: " | grep "CN=$name" > /dev/null || error "Subject field did not verify"
+    done
 done
 
 # Verify infra keys
-cat root.ca/key.crt env.ca/key.crt $year/ca/env_${year}_1.ca/key.crt > envChain.crt
+cat env.ca/key.crt $year/ca/env_${year}_1.ca/key.crt > envChain.crt
 
-for i in $SERVER_KEYS; do
-    verify envChain.crt ${year}/keys/$i.crt
+for key in $SERVER_KEYS; do
+    verify ${year}/keys/$key.crt envChain.crt
 done
 
 rm envChain.crt

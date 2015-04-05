@@ -22,14 +22,19 @@ genca(){ #subj, internalName
 caSign(){ # csr,ca,config,start,end
     start="$4"
     end="$5"
-    [ "$start" != "" ] && start="-startdate $start"
-    [ "$end" != "" ] && end="-enddate $end"
-    [ "$start" == "" -a "$end" == "" ] && start="-days 366"
+    [[ "$start" != "" ]] && start="-startdate $start"
+    [[ "$end" != "" ]] && end="-enddate $end"
+    [[ "$start" == "" && "$end" == "" ]] && start="$ROOT_VALIDITY"
     BASE="$PWD"
     echo "Signing: $1 with $2"
     echo "$start $end"
     pushd $2.ca > /dev/null
-    openssl ca -cert key.crt -keyfile key.key -in "$BASE/$1.csr" -out "$BASE/$1.crt" -batch -config "$BASE/selfsign.config" -extfile "$BASE/$3" $start $end
+    if [[ "$2" == "root" && "$1" == root.* ]]; then
+	signkey="-selfsign"
+    else
+	signkey="-cert key.crt"
+    fi
+    openssl ca $signkey -keyfile key.key -in "$BASE/$1.csr" -out "$BASE/$1.crt" -batch -config "$BASE/selfsign.config" -extfile "$BASE/$3" $start $end
     popd > /dev/null
     echo "Signed"
 }

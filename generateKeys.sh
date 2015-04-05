@@ -31,7 +31,8 @@ rootSign(){ # csr
 
 # Generate the super Root CA
 genca "/CN=Cacert-gigi testCA" root
-openssl x509 -req -days 365 -in root.ca/key.csr -signkey root.ca/key.key -out root.ca/key.crt -extfile ca.cnf
+#echo openssl x509 -req $ROOT_VALIDITY -in root.ca/key.csr -signkey root.ca/key.key -out root.ca/key.crt -extfile ca.cnf
+rootSign root
 
 # generate the various sub-CAs
 for ca in $STRUCT_CAS; do
