@@ -9,15 +9,16 @@ year=$1
 . commonFunctions
 
 CRL="
-crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/$year/env.crl
-authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/$year/env.crt"
+crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/$year/env-1.crl
+authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/$year/env-1.crt"
 
 cat <<TESTCA > req.cnf
 basicConstraints = critical,CA:false
 keyUsage = keyEncipherment, digitalSignature
 extendedKeyUsage=serverAuth
+
 subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid:always,issuer:always
+authorityKeyIdentifier = keyid:always
 $CRL
 TESTCA
 
@@ -25,8 +26,9 @@ cat <<TESTCA > reqClient.cnf
 basicConstraints = critical,CA:false
 keyUsage = keyEncipherment, digitalSignature
 extendedKeyUsage=clientAuth
+
 subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid:always,issuer:always
+authorityKeyIdentifier = keyid:always
 $CRL
 TESTCA
 
@@ -34,8 +36,9 @@ cat <<TESTCA > reqMail.cnf
 basicConstraints = critical,CA:false
 keyUsage = keyEncipherment, digitalSignature
 extendedKeyUsage=emailProtection
+
 subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid:always,issuer:always
+authorityKeyIdentifier = keyid:always
 $CRL
 TESTCA
 

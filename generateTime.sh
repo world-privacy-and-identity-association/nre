@@ -9,8 +9,11 @@ year=$1
 genTimeCA(){ #csr,ca to sign with,start,end
     cat <<TESTCA > timesubca.cnf
 basicConstraints = CA:true
-subjectKeyIdentifier = hash
 keyUsage = keyCertSign, cRLSign
+
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always
+
 crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/$2.crl
 authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/$2.crt
 TESTCA
@@ -22,7 +25,7 @@ mkdir -p $year/ca
 
 
 STARTDATE="${year}"
-ENDDATE="$((${year} + 2))"
+ENDDATE="$((${year} + 3))"
 
 for i in $TIME_IDX; do
     point=${points[${i}]}

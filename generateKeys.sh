@@ -9,16 +9,22 @@ set -e
 ####### create various extensions files for the various certificate types ######
 cat <<TESTCA > ca.cnf
 basicConstraints = CA:true
-subjectKeyIdentifier = hash
 keyUsage = keyCertSign, cRLSign
+
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always
+
 crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/root.crl
 authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/root.crt
 TESTCA
 
 cat <<TESTCA > subca.cnf
 basicConstraints = CA:true
-subjectKeyIdentifier = hash
 keyUsage = keyCertSign, cRLSign
+
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always
+
 crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/root.crl
 authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/root.crt
 TESTCA
