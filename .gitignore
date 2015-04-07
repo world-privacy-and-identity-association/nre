@@ -5,6 +5,7 @@
 *.ca
 *.crl
 *.tar.gz
+*.tar.gz.*
 config
 
 
