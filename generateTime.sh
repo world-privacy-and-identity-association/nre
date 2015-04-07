@@ -24,19 +24,23 @@ TESTCA
 mkdir -p $year/ca
 
 
-STARTDATE="${year}"
-ENDDATE="$((${year} + 3))"
-
 for i in $TIME_IDX; do
-    point=${points[${i}]}
+    point=${year}${points[${i}]}
+    nextp=${points[$((${i} + 1))]}
+    if [[ "$nextp" == "" ]]; then
+	epoint=$((${year} + 3 ))${epoints[${i}]}
+    else
+	epoint=$((${year} + 2 ))${epoints[${i}]}
+    fi
+
     . CAs/env
     genca "/CN=$name ${year}-${i}" $year/ca/env_${year}_${i}
-    genTimeCA $year/ca/env_${year}_${i}.ca/key env "$STARTDATE$point" "$ENDDATE$point"
+    genTimeCA $year/ca/env_${year}_${i}.ca/key env "$point" "$epoint"
     
     for ca in $STRUCT_CAS; do
 	[ "$ca" == "env" ] && continue
 	. CAs/$ca
 	genKey "/CN=$name ${year}-${i}" $year/ca/${ca}_${year}_${i}
-	genTimeCA $year/ca/${ca}_${year}_${i} $ca "$STARTDATE$point" "$ENDDATE$point"
+	genTimeCA $year/ca/${ca}_${year}_${i} $ca "$point" "$epoint"
     done
 done
