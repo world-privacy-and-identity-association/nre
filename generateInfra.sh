@@ -10,7 +10,7 @@ year=$1
 
 CRL="
 crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/$year/env-1.crl
-authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/$year/env-1.crt"
+authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/g2/$year/env-1.crt"
 
 cat <<TESTCA > req.cnf
 basicConstraints = critical,CA:false

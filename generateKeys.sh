@@ -15,7 +15,7 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always
 
 crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/root.crl
-authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/root.crt
+authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/g2/root.crt
 TESTCA
 
 cat <<TESTCA > subca.cnf
@@ -26,7 +26,7 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always
 
 crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/root.crl
-authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/root.crt
+authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/g2/root.crt
 TESTCA
 
 
