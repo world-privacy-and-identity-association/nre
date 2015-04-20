@@ -4,7 +4,6 @@
 [[ "$1" == "" ]] && echo "Usage: $0 <year>" && exit 1
 year=$1
 
-mkdir -p htdocs/crl/g2/$year
 mkdir -p htdocs/crt/g2/$year
 
 for ca in root $STRUCT_CAS; do
