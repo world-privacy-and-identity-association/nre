@@ -61,9 +61,9 @@ for ca in ${STRUCT_CAS}; do
 	echo "$EXT" | grep -A 2 "Basic Constraints" | grep "CA:TRUE" > /dev/null || error "Basic Constraints field is wrong for $ca"
 	echo "$EXT" | grep -A 2 "Key Usage" | grep "^ *Certificate Sign, CRL Sign$" > /dev/null || error "KeyUsage field is wrong for $ca"
 
-	echo "$EXT" | grep -A 4 "CRL Distribution" | grep "g2.crl.cacert.org/g2/$ca.crl" > /dev/null || error "CRL field is wrong for $ca"
-	echo "$EXT" | grep "CA Issuers" | grep "/$ca.crt" | grep "g2.crt.cacert.org/g2/" > /dev/null || error "CA Issuers field is wrong for $ca"
-	echo "$EXT" | grep "OCSP" | grep "http://g2.ocsp.cacert.org" > /dev/null || error "OCSP field is wrong for $ca"
+	echo "$EXT" | grep -A 4 "CRL Distribution" | grep "g2.crl.${DOMAIN}/g2/$ca.crl" > /dev/null || error "CRL field is wrong for $ca"
+	echo "$EXT" | grep "CA Issuers" | grep "/$ca.crt" | grep "g2.crt.${DOMAIN}/g2/" > /dev/null || error "CA Issuers field is wrong for $ca"
+	echo "$EXT" | grep "OCSP" | grep "http://g2.ocsp.${DOMAIN}" > /dev/null || error "OCSP field is wrong for $ca"
     done
 done
 

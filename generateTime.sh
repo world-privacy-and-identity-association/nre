@@ -14,8 +14,8 @@ keyUsage = keyCertSign, cRLSign
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always
 
-crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/$2.crl
-authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/g2/$2.crt
+crlDistributionPoints=URI:http://g2.crl.${DOMAIN}/g2/$2.crl
+authorityInfoAccess = OCSP;URI:http://g2.ocsp.${DOMAIN},caIssuers;URI:http://g2.crt.${DOMAIN}/g2/$2.crt
 TESTCA
     caSign $1 $2 timesubca.cnf "$3" "$4"
     rm timesubca.cnf

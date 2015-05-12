@@ -14,8 +14,8 @@ keyUsage = keyCertSign, cRLSign
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always
 
-crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/root.crl
-authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/g2/root.crt
+crlDistributionPoints=URI:http://g2.crl.${DOMAIN}/g2/root.crl
+authorityInfoAccess = OCSP;URI:http://g2.ocsp.${DOMAIN},caIssuers;URI:http://g2.crt.${DOMAIN}/g2/root.crt
 TESTCA
 
 cat <<TESTCA > subca.cnf
@@ -25,8 +25,8 @@ keyUsage = keyCertSign, cRLSign
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always
 
-crlDistributionPoints=URI:http://g2.crl.cacert.org/g2/root.crl
-authorityInfoAccess = OCSP;URI:http://g2.ocsp.cacert.org,caIssuers;URI:http://g2.crt.cacert.org/g2/root.crt
+crlDistributionPoints=URI:http://g2.crl.${DOMAIN}/g2/root.crl
+authorityInfoAccess = OCSP;URI:http://g2.ocsp.${DOMAIN},caIssuers;URI:http://g2.crt.${DOMAIN}/g2/root.crt
 TESTCA
 
 
