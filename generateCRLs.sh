@@ -7,12 +7,13 @@ year=$1
 
 . structure
 . commonFunctions
+cd generated
 
 generateCRL() { # name, year, month
     echo CRL $1 $2-$3
     BASE="$PWD"
     pushd $1.ca > /dev/null
-    TZ=UTC LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1 FAKETIME="${year}-${month}-01 00:00:00" openssl ca -gencrl -config "$BASE/selfsign.config" -keyfile key.key -cert key.crt -crldays 35 -out $2_$3.crl
+    TZ=UTC LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1 FAKETIME="${year}-${month}-01 00:00:00" openssl ca -gencrl -config "$BASE/../selfsign.config" -keyfile key.key -cert key.crt -crldays 35 -out $2_$3.crl
     popd > /dev/null
 }
 

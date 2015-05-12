@@ -34,7 +34,7 @@ caSign(){ # csr,ca,config,start,end
     else
 	signkey="-cert key.crt"
     fi
-    openssl ca $signkey -keyfile key.key -in "$BASE/$1.csr" -out "$BASE/$1.crt" -batch -config "$BASE/selfsign.config" -extfile "$BASE/$3" $start $end
+    openssl ca $signkey -keyfile key.key -in "$BASE/$1.csr" -out "$BASE/$1.crt" -batch -config "$BASE/../selfsign.config" -extfile "$BASE/$3" $start $end
     popd > /dev/null
     echo "Signed"
 }

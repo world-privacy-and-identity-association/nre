@@ -6,6 +6,8 @@
 [ "$1" == "" ] && echo "Usage: $0 <year>" && exit 1
 year=$1
 
+cd generated
+
 genTimeCA(){ #csr,ca to sign with,start,end
     cat <<TESTCA > timesubca.cnf
 basicConstraints = CA:true
@@ -33,13 +35,13 @@ for i in $TIME_IDX; do
 	epoint=$((${year} + 2 ))${epoints[${i}]}
     fi
 
-    . CAs/env
+    . ../CAs/env
     genca "/CN=$name ${year}-${i}" $year/ca/env_${year}_${i}
     genTimeCA $year/ca/env_${year}_${i}.ca/key env "$point" "$epoint"
     
     for ca in $STRUCT_CAS; do
 	[ "$ca" == "env" ] && continue
-	. CAs/$ca
+	. ../CAs/$ca
 	genKey "/CN=$name ${year}-${i}" $year/ca/${ca}_${year}_${i}
 	genTimeCA $year/ca/${ca}_${year}_${i} $ca "$point" "$epoint"
     done

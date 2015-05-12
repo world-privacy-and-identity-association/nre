@@ -8,6 +8,8 @@ year=$1
 . structure
 . commonFunctions
 
+cd generated
+
 CRL="
 crlDistributionPoints=URI:http://g2.crl.${DOMAIN}/g2/$year/env-1.crl
 authorityInfoAccess = OCSP;URI:http://g2.ocsp.${DOMAIN},caIssuers;URI:http://g2.crt.${DOMAIN}/g2/$year/env-1.crt"

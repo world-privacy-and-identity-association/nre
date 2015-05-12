@@ -5,6 +5,8 @@ set -e
 . structure
 . commonFunctions
 
+mkdir -p generated
+cd generated
 
 ####### create various extensions files for the various certificate types ######
 cat <<TESTCA > ca.cnf
@@ -42,7 +44,7 @@ rootSign root
 
 # generate the various sub-CAs
 for ca in $STRUCT_CAS; do
-    . CAs/$ca
+    . ../CAs/$ca
     genca "/CN=$name" $ca
     rootSign $ca
 done

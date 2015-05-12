@@ -4,6 +4,7 @@ set -e
 year=$1
 
 . structure
+cd generated
 
 verify(){ # crt, [untrusted], additional
     untrusted="$2"
@@ -43,7 +44,7 @@ done
 # Verify level-2 (time) structure
 for ca in ${STRUCT_CAS}; do
     for i in $TIME_IDX; do
-	. CAs/$ca
+	. ../CAs/$ca
 	if [ "$ca" == "env" ]; then
 	    CA_FILE=$year/ca/${ca}_${year}_${i}.ca/key.crt
 	else

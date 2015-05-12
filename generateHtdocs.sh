@@ -4,6 +4,8 @@
 [[ "$1" == "" ]] && echo "Usage: $0 <year>" && exit 1
 year=$1
 
+cd generated
+
 mkdir -p htdocs/crt/g2/$year
 
 for ca in root $STRUCT_CAS; do
@@ -19,3 +21,6 @@ for ca in $STRUCT_CAS; do
 	cp $year/ca/${ca}_${year}_${i}.crt htdocs/crt/g2/$year/${ca}-${year}-${i}.crt
     done
 done
+
+tar czf htdocs.tgz htdocs
+rm -R htdocs

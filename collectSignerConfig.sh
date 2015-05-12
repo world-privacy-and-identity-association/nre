@@ -5,6 +5,7 @@ set -e
 year=$1
 
 . structure
+cd generated
 
 installCommKeys() { # peer (server,client)
     peer="$1"
@@ -27,7 +28,7 @@ done
 
 installCommKeys client
 
-tar czf signer-client-$year.tar.gz profiles -C signer-config keys ca
+tar czf signer-client-$year.tar.gz -C .. profiles -C generated/signer-config keys ca
 
 # Updating for server
 rm signer-config/keys/signer_*
@@ -41,6 +42,6 @@ done
 
 installCommKeys server
 
-tar czf signer-server-$year.tar.gz profiles -C signer-config keys ca
+tar czf signer-server-$year.tar.gz -C .. profiles -C generated/signer-config keys ca
 
 rm -R signer-config

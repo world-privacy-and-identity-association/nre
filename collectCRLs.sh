@@ -7,6 +7,7 @@ year=$1
 
 . structure
 . commonFunctions
+cd generated
 
 fetchCRLS(){ #year, cyear month timeIdx
     year=$1
