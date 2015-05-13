@@ -15,3 +15,10 @@ echo "========== Generating CRLs for Year 2015 ======="
 
 echo "========== Verifying Year 2015 ======="
 ./verify.sh 2015
+
+
+echo "========== Collection things ======="
+collectCRLs.sh
+collectGigiConfig.sh
+collectOffline.sh
+collectSignerConfig.sh
