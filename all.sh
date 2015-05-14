@@ -18,7 +18,7 @@ echo "========== Verifying Year 2015 ======="
 
 
 echo "========== Collection things ======="
-collectCRLs.sh
-collectGigiConfig.sh
-collectOffline.sh
-collectSignerConfig.sh
+./collectCRLs.sh 2015
+./collectGigiConfig.sh 2015
+./collectOffline.sh 2015
+./collectSignerConfig.sh 2015
