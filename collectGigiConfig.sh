@@ -17,6 +17,11 @@ for ca in $STRUCT_CAS; do
     done
 done
 
-tar czf gigi-$year.tar.gz -C .. profiles -C generated/gigi-config ca
+mkdir -p gigi-config/keys
+for k in ${year}/keys/{api,mail,secure,static,www}.pkcs12; do
+   cp $k gigi-config/keys
+done
+
+tar czf gigi-$year.tar.gz -C .. profiles -C generated/gigi-config ca keys
 
 rm -Rf gigi-config
