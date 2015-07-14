@@ -2,6 +2,8 @@
 
 ./clear.sh
 
+date
+
 echo "========== Generating Root ======="
 ./generateKeys.sh
 
