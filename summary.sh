@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+[ "$1" == "" ] && echo "Usage: $0 <year>" && exit 1 
+year=$1
+
+. structure
+. commonFunctions
+cd generated
+
+
+echo "Data for escrow{1,2}"
+ls -als offline.tar.aes-256-cbc
+#openssl enc -d -in offline.tar.aes-256-cbc -kfile <(cat offlinePassword.txt) -md sha256 -aes-256-cbc | tar t
+
+echo "Data for offlinePassword"
+ls -als offlinePassword.txt
+
+echo "Data for crlPassword1-{1,2}"
+ls -als crls-$year/crl-passwords1.txt
+
+echo "Data for crlPassword2-{1,2}"
+ls -als crls-$year/crl-passwords2.txt
+
+echo "Data for operative"
+ls -als crls-$year/*.tar.aes-256-cbc gigi-$year.tar.gz signer-client-$year.tar.gz signer-server-$year.tar.gz

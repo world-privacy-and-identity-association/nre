@@ -14,10 +14,11 @@ fetchCRLS(){ #year, cyear month timeIdx
     cyear=$2
     month=$3
     timeIdx=$4
-    cp $year/ca/env_${year}_${timeIdx}.ca/${cyear}_${month}.crl crls-${year}/$year-$month/${year}/env_${year}_${timeIdx}.crl	
+    cp -v $year/ca/env_${year}_${timeIdx}.ca/${cyear}_${month}.crl crls-${year}/$cyear-$month/${year}/env_${year}_${timeIdx}.crl
     # no "for ca in $STRUCT_CAs" because that's cassiopeias work.
 }
 
+rm -Rf crls-${year}
 mkdir -p crls-${year}
 for month in {01..12}; do
     BASE=crls-${year}/$year-$month
@@ -55,7 +56,16 @@ for month in {01..06}; do
 done
 
 pushd crls-${year}
+rm -f crl-passwords1.txt crl-passwords2.txt
 for i in *; do
-    tar czf $i.tgz -C $i .
+    PASSW1=`head -c15 /dev/urandom | base64`
+    PASSW2=`head -c15 /dev/urandom | base64`
+    echo "Crypting CRL $i"
+    echo "$i: $PASSW1" >> crl-passwords1.txt
+    echo "$i: $PASSW2" >> crl-passwords2.txt
+    tar c -C $i . | openssl enc -e -kfile <(echo -n "$PASSW1$PASSW2") -md sha256 -aes-256-cbc > $i.tar.aes-256-cbc
+    PASSW1=
+    PASSW2=
+
 done
 popd

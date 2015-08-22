@@ -24,3 +24,5 @@ echo "========== Collection things ======="
 ./collectGigiConfig.sh 2015
 ./collectOffline.sh 2015
 ./collectSignerConfig.sh 2015
+
+./summary.sh 2015
