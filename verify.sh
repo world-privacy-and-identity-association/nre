@@ -27,7 +27,7 @@ X509v3 Authority Key Identifier:
 X509v3 CRL Distribution Points: 
 Authority Information Access: "
 
-	diff <(echo "$EXTLIST" | dos2unix) <(echo "$VAR" | dos2unix) || error "Extensions order is wrong for $ca"
+	diff <(echo "$EXTLIST") <(echo "$VAR") || error "Extensions order is wrong for $ca"
 
 }
 

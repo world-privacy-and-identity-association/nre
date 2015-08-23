@@ -49,7 +49,7 @@ genserver(){ #key, subject, config
     openssl req -new -key $1.key -out $1.csr -subj "$2"
     caSign $1 $year/ca/env_${year}_1 "$3" "${year}${points[1]}" "$((${year} + 2))${points[1]}"
     
-    TZ=UTC LD_PRELOAD=/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1 FAKETIME="${year}-01-01 00:00:00" openssl pkcs12 -inkey $1.key -in $1.crt -CAfile env.chain.crt -chain -name $1 -export -passout pass:changeit -out $1.pkcs12 -name "$4"
+    TZ=UTC LD_PRELOAD=`ls /usr/lib/*/faketime/libfaketime.so.1` FAKETIME="${year}-01-01 00:00:00" openssl pkcs12 -inkey $1.key -in $1.crt -CAfile env.chain.crt -chain -name $1 -export -passout pass:changeit -out $1.pkcs12 -name "$4"
     
 }
 
