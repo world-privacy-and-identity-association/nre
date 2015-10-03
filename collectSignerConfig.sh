@@ -10,7 +10,7 @@ cd generated
 installCommKeys() { # peer (server,client)
     peer="$1"
     mkdir -p signer-config/keys
-    cp ${year}/ca/env_${year}_1.ca/key.crt signer-config/keys/ca.crt
+    cat ${year}/ca/env_${year}_1.ca/key.crt env.ca/key.crt root.ca/key.crt > signer-config/keys/ca.crt
     for file in signer_${peer}.{crt,key}; do
 	cp ${year}/keys/$file signer-config/keys/$file
     done

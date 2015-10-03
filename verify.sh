@@ -10,6 +10,7 @@ verify(){ # crt, [untrusted], additional
     untrusted="$2"
     [[ "$untrusted" != "" ]] && untrusted="-untrusted $untrusted"
     openssl verify $3 -CAfile root.ca/key.crt $untrusted "$1" || error "$1 did not verify"
+    echo openssl verify $3 -CAfile root.ca/key.crt $untrusted "$1" || error "$1 did not verify"
 }
 
 error() { # message
@@ -71,7 +72,7 @@ done
 # Verify infra keys
 cat env.ca/key.crt $year/ca/env_${year}_1.ca/key.crt > envChain.crt
 
-for key in $SERVER_KEYS; do
+for key in $SERVER_KEYS signer_client signer_server; do
     verify ${year}/keys/$key.crt envChain.crt
     verifyExtlist "$(openssl x509 -in "${year}/keys/$key.crt" -noout -text)" critical "X509v3 Extended Key Usage: 
 "
