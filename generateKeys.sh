@@ -41,7 +41,7 @@ authorityInfoAccess = OCSP;URI:http://g2.ocsp.${DOMAIN},caIssuers;URI:http://g2.
 certificatePolicies=@polsect
 
 [polsect]
-policyIdentifier = 1.3.6.1.4.1.18506.9.${CPSID}
+policyIdentifier = 1.3.6.1.4.1.18506.9.2.${CPSID}
 CPS.1="http://g2.cps.${DOMAIN}/g2/${KNAME}.cps"
 
 TESTCA
