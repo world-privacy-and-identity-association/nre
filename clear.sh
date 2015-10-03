@@ -1,4 +1,4 @@
 #!/bin/sh
 
-rm -R generated
+rm -fR generated
 

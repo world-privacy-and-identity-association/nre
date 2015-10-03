@@ -3,7 +3,7 @@
 
 genKey(){ #subj, internalName
     openssl genrsa -out $2.key ${KEYSIZE}
-    openssl req -new -key $2.key -out $2.csr -subj "$1/O=Test Environment CA Ltd./OU=Test Environment CAs"
+    openssl req -new -key $2.key -out $2.csr -subj "$1/O=Test Environment CA Ltd./OU=Test Environment CAs/C=AU"
 
 }
 

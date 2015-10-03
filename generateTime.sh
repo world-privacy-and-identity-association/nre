@@ -9,15 +9,24 @@ year=$1
 cd generated
 
 genTimeCA(){ #csr,ca to sign with,start,end
+    KNAME=$2
+    . ../CAs/${KNAME}
     cat <<TESTCA > timesubca.cnf
-basicConstraints = CA:true
-keyUsage = keyCertSign, cRLSign
+basicConstraints=critical,CA:true
+keyUsage=critical,keyCertSign, cRLSign
 
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always
 
 crlDistributionPoints=URI:http://g2.crl.${DOMAIN}/g2/$2.crl
 authorityInfoAccess = OCSP;URI:http://g2.ocsp.${DOMAIN},caIssuers;URI:http://g2.crt.${DOMAIN}/g2/$2.crt
+
+certificatePolicies=@polsect
+
+[polsect]
+policyIdentifier = 1.3.6.1.4.1.18506.9.${CPSID}
+CPS.1="http://g2.cps.${DOMAIN}/g2/${KNAME}.cps"
+
 TESTCA
     caSign $1 $2 timesubca.cnf "$3" "$4"
     rm timesubca.cnf
