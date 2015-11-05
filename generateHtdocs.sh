@@ -13,12 +13,12 @@ for ca in root $STRUCT_CAS; do
 done
 
 for i in $TIME_IDX; do
-    cp $year/ca/env_${year}_${i}.ca/key.crt htdocs/crt/g2/$year/env-${year}-${i}.crt
+    cp $year/ca/env_${year}_${i}.ca/key.crt htdocs/crt/g2/$year/env-${i}.crt
 done
 for ca in $STRUCT_CAS; do
     [[ "$ca" == "env" ]] && continue
     for i in $TIME_IDX; do
-	cp $year/ca/${ca}_${year}_${i}.crt htdocs/crt/g2/$year/${ca}-${year}-${i}.crt
+	cp $year/ca/${ca}_${year}_${i}.crt htdocs/crt/g2/$year/${ca}-${i}.crt
     done
 done
 
