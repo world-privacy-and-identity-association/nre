@@ -1,28 +1,34 @@
 #!/bin/bash
 
-./clear.sh
-
 date
 
-echo "========== Generating Root ======="
-./generateKeys.sh
 
-echo "========== Generating Year 2015 ======="
-./generateTime.sh 2015
-echo "========== Generating Infra for Year 2015 ======="
-./generateInfra.sh 2015
-echo "========== Generating CRLs for Year 2015 ======="
-./generateCRLs.sh 2015
+for arg in "$@"; do
+    if [[ "$arg" == "root" ]]; then
+	echo "========== Generating Root ======="
+	./clear.sh
+	./generateKeys.sh
+    else
+	echo "========== Generating Year $arg ======="
+	./generateTime.sh "$arg"
+	echo "========== Generating Infra for Year $arg ======="
+	./generateInfra.sh "$arg"
+	echo "========== Generating CRLs for Year $arg ======="
+	./generateCRLs.sh "$arg"
+	
+	
+	echo "========== Verifying Year $arg ======="
+	./verify.sh "$arg"
+	
+	
+	echo "========== Collection things ======="
+	./collectCRLs.sh "$arg"
+	./collectGigiConfig.sh "$arg"
+	./collectOffline.sh "$arg"
+	./collectSignerConfig.sh "$arg"
+	
+	./summary.sh "$arg"
+    fi
+done
 
 
-echo "========== Verifying Year 2015 ======="
-./verify.sh 2015
-
-
-echo "========== Collection things ======="
-./collectCRLs.sh 2015
-./collectGigiConfig.sh 2015
-./collectOffline.sh 2015
-./collectSignerConfig.sh 2015
-
-./summary.sh 2015
