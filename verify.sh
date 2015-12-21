@@ -20,9 +20,15 @@ error() { # message
 
 verifyExtlist() { # ext
 	EXTLIST=`echo "$1" | grep "X509v3\|Authority Information" | sed "s/^[ \t]*//"`
+	BASIC=$2
+	if [[ $BASIC == "" ]]; then
+	    BASIC="critical"
+	else
+	    BASIC="critical, $BASIC"
+	fi
 	VAR="X509v3 extensions:
-X509v3 Basic Constraints: $2
-X509v3 Key Usage: 
+X509v3 Basic Constraints: $BASIC
+X509v3 Key Usage: critical
 ${3}X509v3 Subject Key Identifier: 
 X509v3 Authority Key Identifier: 
 X509v3 CRL Distribution Points: 
