@@ -2,8 +2,8 @@
 # this script generates a set of sample keys
 set -e
 
-. structure
-. commonFunctions
+. structure.bash
+. commonFunctions.bash
 
 mkdir -p generated
 cd generated

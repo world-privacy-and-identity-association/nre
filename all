@@ -6,28 +6,28 @@ date
 for arg in "$@"; do
     if [[ "$arg" == "root" ]]; then
 	echo "========== Generating Root ======="
-	./clear.sh
-	./generateKeys.sh
+	./clear
+	./generateKeys
     else
 	echo "========== Generating Year $arg ======="
-	./generateTime.sh "$arg"
+	./generateTime "$arg"
 	echo "========== Generating Infra for Year $arg ======="
-	./generateInfra.sh "$arg"
+	./generateInfra "$arg"
 	echo "========== Generating CRLs for Year $arg ======="
-	./generateCRLs.sh "$arg"
+	./generateCRLs "$arg"
 	
 	
 	echo "========== Verifying Year $arg ======="
-	./verify.sh "$arg"
+	./verify "$arg"
 	
 	
 	echo "========== Collection things ======="
-	./collectCRLs.sh "$arg"
-	./collectGigiConfig.sh "$arg"
-	./collectOffline.sh "$arg"
-	./collectSignerConfig.sh "$arg"
+	./collectCRLs "$arg"
+	./collectGigiConfig "$arg"
+	./collectOffline "$arg"
+	./collectSignerConfig "$arg"
 	
-	./summary.sh "$arg"
+	./summary "$arg"
     fi
 done
 

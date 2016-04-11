@@ -2,23 +2,23 @@
 
 This is the a project that contains scripts to generate CAcerts new ( after 2015 ) root structure.
 
-You can run the whole generation process for 2015 by invoking `./all.sh root 2015`.
+You can run the whole generation process for 2015 by invoking `./all root 2015`.
 
 ## Overview of Generating Shell Scripts
 
-The shellscripts that can be invoked (in order of `all.sh`) are:
+The shellscripts that can be invoked (in order of `all`) are:
 
-* `clear.sh` remove all previously generated keys
-* `generateKeys.sh` generate the root certificate and structure certificates (levels 0 and 1)
-* `generateTime.sh 2015` generate the sub-cas for the year 2015
-* `generateInfra.sh 2015` generate the CAcert Infrastructure keys (gigi ssl, gigi smime, signer communication, ...)
-* `verify.sh 2015` verify all keys for the year 2015
-* (optional) `generateSignerConfig.sh 2015` generate config to be deployed on cassiopeia
+* `clear` remove all previously generated keys
+* `generateKeys` generate the root certificate and structure certificates (levels 0 and 1)
+* `generateTime 2015` generate the sub-cas for the year 2015
+* `generateInfra 2015` generate the CAcert Infrastructure keys (gigi ssl, gigi smime, signer communication, ...)
+* `verify 2015` verify all keys for the year 2015
+* (optional) `generateSignerConfig 2015` generate config to be deployed on cassiopeia
 
 all these scripts depend on 2 'library-scripts':
 
-* `commonFunctions` functions used all over those scripts
-* `structure` definitions of what cas and keys exist
+* `commonFunctions.bash` functions used all over those scripts
+* `structure.bash` definitions of what cas and keys exist
 
 ## Other Files and Folders
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. structure
+. structure.bash
 [[ "$1" == "" ]] && echo "Usage: $0 <year>" && exit 1
 year=$1
 

@@ -5,8 +5,8 @@ set -e
 [ "$1" == "" ] && echo "Usage: $0 <year>" && exit 1 
 year=$1
 
-. structure
-. commonFunctions
+. structure.bash
+. commonFunctions.bash
 cd generated
 
 

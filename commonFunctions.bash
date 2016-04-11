@@ -1,5 +1,5 @@
 #!/bin/bash
-. structure
+. structure.bash
 
 genKey(){ #subj, internalName
     openssl genrsa -out $2.key ${KEYSIZE}

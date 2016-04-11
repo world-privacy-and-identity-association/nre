@@ -3,7 +3,7 @@ set -e
 [ "$1" == "" ] && echo "Usage: $0 <year>" && exit 1
 year=$1
 
-. structure
+. structure.bash
 cd generated
 
 verify(){ # crt, [untrusted], additional
