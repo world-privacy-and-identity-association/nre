@@ -5,29 +5,29 @@ date
 
 for arg in "$@"; do
     if [[ "$arg" == "root" ]]; then
-	echo "========== Generating Root ======="
-	./clear
-	./generateKeys
+        echo "========== Generating Root ======="
+        ./clear
+        ./generateKeys
     else
-	echo "========== Generating Year $arg ======="
-	./generateTime "$arg"
-	echo "========== Generating Infra for Year $arg ======="
-	./generateInfra "$arg"
-	echo "========== Generating CRLs for Year $arg ======="
-	./generateCRLs "$arg"
-	
-	
-	echo "========== Verifying Year $arg ======="
-	./verify "$arg"
-	
-	
-	echo "========== Collection things ======="
-	./collectCRLs "$arg"
-	./collectGigiConfig "$arg"
-	./collectOffline "$arg"
-	./collectSignerConfig "$arg"
-	
-	./summary "$arg"
+        echo "========== Generating Year $arg ======="
+        ./generateTime "$arg"
+        echo "========== Generating Infra for Year $arg ======="
+        ./generateInfra "$arg"
+        echo "========== Generating CRLs for Year $arg ======="
+        ./generateCRLs "$arg"
+        
+        
+        echo "========== Verifying Year $arg ======="
+        ./verify "$arg"
+        
+        
+        echo "========== Collection things ======="
+        ./collectCRLs "$arg"
+        ./collectGigiConfig "$arg"
+        ./collectOffline "$arg"
+        ./collectSignerConfig "$arg"
+        
+        ./summary "$arg"
     fi
 done
 

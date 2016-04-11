@@ -24,10 +24,10 @@ TESTCA
 rootSign(){ # csr
     POLICY=ca.cnf
     if [[ "$1" != "root" ]] ; then
-	KNAME=$1
-	POLICY=subca.cnf
-	. ../CAs/${KNAME}
-	cat <<TESTCA > subca.cnf
+        KNAME=$1
+        POLICY=subca.cnf
+        . ../CAs/${KNAME}
+        cat <<TESTCA > subca.cnf
 
 basicConstraints =critical, CA:true
 keyUsage =critical, keyCertSign, cRLSign

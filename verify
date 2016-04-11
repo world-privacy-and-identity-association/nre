@@ -19,14 +19,14 @@ error() { # message
 }
 
 verifyExtlist() { # ext
-	EXTLIST=`echo "$1" | grep "X509v3\|Authority Information" | sed "s/^[ \t]*//"`
-	BASIC=$2
-	if [[ $BASIC == "" ]]; then
-	    BASIC="critical"
-	else
-	    BASIC="critical, $BASIC"
-	fi
-	VAR="X509v3 extensions:
+        EXTLIST=`echo "$1" | grep "X509v3\|Authority Information" | sed "s/^[ \t]*//"`
+        BASIC=$2
+        if [[ $BASIC == "" ]]; then
+            BASIC="critical"
+        else
+            BASIC="critical, $BASIC"
+        fi
+        VAR="X509v3 extensions:
 X509v3 Basic Constraints: $BASIC
 X509v3 Key Usage: critical
 ${3}X509v3 Subject Key Identifier: 
@@ -34,7 +34,7 @@ X509v3 Authority Key Identifier:
 X509v3 CRL Distribution Points: 
 Authority Information Access: "
 
-	diff <(echo "$EXTLIST") <(echo "$VAR") || error "Extensions order is wrong for $ca"
+        diff <(echo "$EXTLIST") <(echo "$VAR") || error "Extensions order is wrong for $ca"
 
 }
 
@@ -51,27 +51,27 @@ done
 # Verify level-2 (time) structure
 for ca in ${STRUCT_CAS}; do
     for i in $TIME_IDX; do
-	. ../CAs/$ca
-	if [ "$ca" == "env" ]; then
-	    CA_FILE=$year/ca/${ca}_${year}_${i}.ca/key.crt
-	else
-	    CA_FILE=$year/ca/${ca}_${year}_${i}.crt
-	fi
-	time=${points[${i}]}
-	timestamp=$(date --date="${time:0:2}/${time:2:2}/${year} 03:00:00 UTC" +"%s")
-	verify "$CA_FILE" "$ca.ca/key.crt" "-attime ${timestamp}"
-	EXT=`openssl x509 -in "$CA_FILE" -noout -text`
+        . ../CAs/$ca
+        if [ "$ca" == "env" ]; then
+            CA_FILE=$year/ca/${ca}_${year}_${i}.ca/key.crt
+        else
+            CA_FILE=$year/ca/${ca}_${year}_${i}.crt
+        fi
+        time=${points[${i}]}
+        timestamp=$(date --date="${time:0:2}/${time:2:2}/${year} 03:00:00 UTC" +"%s")
+        verify "$CA_FILE" "$ca.ca/key.crt" "-attime ${timestamp}"
+        EXT=`openssl x509 -in "$CA_FILE" -noout -text`
 
-	verifyExtlist "$EXT"
+        verifyExtlist "$EXT"
 
-	echo "$EXT" | grep "Subject: " | grep "CN=$name" > /dev/null || error "Subject field did not verify"
+        echo "$EXT" | grep "Subject: " | grep "CN=$name" > /dev/null || error "Subject field did not verify"
 
-	echo "$EXT" | grep -A 2 "Basic Constraints" | grep "CA:TRUE" > /dev/null || error "Basic Constraints field is wrong for $ca"
-	echo "$EXT" | grep -A 2 "Key Usage" | grep "^ *Certificate Sign, CRL Sign$" > /dev/null || error "KeyUsage field is wrong for $ca"
+        echo "$EXT" | grep -A 2 "Basic Constraints" | grep "CA:TRUE" > /dev/null || error "Basic Constraints field is wrong for $ca"
+        echo "$EXT" | grep -A 2 "Key Usage" | grep "^ *Certificate Sign, CRL Sign$" > /dev/null || error "KeyUsage field is wrong for $ca"
 
-	echo "$EXT" | grep -A 4 "CRL Distribution" | grep "g2.crl.${DOMAIN}/g2/$ca.crl" > /dev/null || error "CRL field is wrong for $ca"
-	echo "$EXT" | grep "CA Issuers" | grep "/$ca.crt" | grep "g2.crt.${DOMAIN}/g2/" > /dev/null || error "CA Issuers field is wrong for $ca"
-	echo "$EXT" | grep "OCSP" | grep "http://g2.ocsp.${DOMAIN}" > /dev/null || error "OCSP field is wrong for $ca"
+        echo "$EXT" | grep -A 4 "CRL Distribution" | grep "g2.crl.${DOMAIN}/g2/$ca.crl" > /dev/null || error "CRL field is wrong for $ca"
+        echo "$EXT" | grep "CA Issuers" | grep "/$ca.crt" | grep "g2.crt.${DOMAIN}/g2/" > /dev/null || error "CA Issuers field is wrong for $ca"
+        echo "$EXT" | grep "OCSP" | grep "http://g2.ocsp.${DOMAIN}" > /dev/null || error "OCSP field is wrong for $ca"
     done
 done
 

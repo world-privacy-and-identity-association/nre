@@ -30,9 +30,9 @@ caSign(){ # csr,ca,config,start,end
     echo "$start $end"
     pushd $2.ca > /dev/null
     if [[ "$2" == "root" && "$1" == root.* ]]; then
-	signkey="-selfsign"
+        signkey="-selfsign"
     else
-	signkey="-cert key.crt"
+        signkey="-cert key.crt"
     fi
     openssl ca $signkey -keyfile key.key -in "$BASE/$1.csr" -out "$BASE/$1.crt" -batch -config "$BASE/../selfsign.config" -extfile "$BASE/$3" $start $end
     popd > /dev/null
