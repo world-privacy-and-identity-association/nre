@@ -2,7 +2,7 @@
 
 This is the a project that contains scripts to generate CAcerts new ( after 2015 ) root structure.
 
-You can run the whole generation process for 2015 by invoking `all.sh `.
+You can run the whole generation process for 2015 by invoking `./all.sh root 2015`.
 
 ## Overview of Generating Shell Scripts
 
