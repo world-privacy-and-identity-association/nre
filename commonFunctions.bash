@@ -39,3 +39,14 @@ caSign(){ # csr,ca,config,start,end
     echo "Signed"
 }
 
+findLibfaketime() {
+    for candidate in /usr/lib/faketime/libfaketime.so.1 /usr/lib/*/faketime/libfaketime.so.1; do
+        if [[ -f "$candidate" ]]; then
+            printf '%s\n' "$candidate"
+            return
+        fi
+    done
+    printf >&2 'error: no libfaketime found\n'
+    exit 1 # unfortunately, this will only exit the $() subshell
+}
+
