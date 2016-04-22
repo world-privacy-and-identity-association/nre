@@ -15,10 +15,9 @@ for ca in $STRUCT_CAS; do
     done
 done
 
-tar czf signer-client-$year.tar.gz -C .. profiles -C generated/signer-config keys ca
+tar czf signer-client-$year.tar.gz -C .. profiles -C generated/signer-config ca
 
 # Updating for server
-rm signer-config/keys/signer_*
 
 for ca in $STRUCT_CAS; do
     for i in $TIME_IDX; do
@@ -26,6 +25,6 @@ for ca in $STRUCT_CAS; do
     done
 done
 
-tar czf signer-server-$year.tar.gz -C .. profiles -C generated/signer-config keys ca
+tar czf signer-server-$year.tar.gz -C .. profiles -C generated/signer-config ca
 
 rm -R signer-config

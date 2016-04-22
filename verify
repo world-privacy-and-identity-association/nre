@@ -19,50 +19,45 @@ error() { # message
 }
 
 verifyExtlist() { # ext
-        EXTLIST=`echo "$1" | grep "X509v3\|Authority Information" | sed "s/^[ \t]*//"`
-        BASIC=$2
-        if [[ $BASIC == "" ]]; then
-            BASIC="critical"
-        else
-            BASIC="critical, $BASIC"
-        fi
-        VAR="X509v3 extensions:
-X509v3 Basic Constraints: $BASIC
+    EXTLIST=`echo "$1" | grep "X509v3\|Authority Information" | sed "s/^[ \t]*//"`
+    ADD="
+X509v3 Certificate Policies: "
+    if [[ $2 == "root" ]]; then
+        ADD=""
+    fi
+    VAR="X509v3 extensions:
+X509v3 Basic Constraints: critical
 X509v3 Key Usage: critical
-${3}X509v3 Subject Key Identifier: 
+X509v3 Subject Key Identifier: 
 X509v3 Authority Key Identifier: 
 X509v3 CRL Distribution Points: 
-Authority Information Access: "
+Authority Information Access: $ADD"
 
-        diff <(echo "$EXTLIST") <(echo "$VAR") || error "Extensions order is wrong for $ca"
+    diff <(echo "$EXTLIST") <(echo "$VAR") || error "Extensions order is wrong for $2"
 
 }
 
 # Verify root
 verify root.ca/key.crt
-verifyExtlist "$(openssl x509 -in "root.ca/key.crt" -noout -text)"
+verifyExtlist "$(openssl x509 -in "root.ca/key.crt" -noout -text)" root
 
 # Verify level-1 structure
 for ca in $STRUCT_CAS; do
     verify $ca.ca/key.crt
-    verifyExtlist "$(openssl x509 -in "$ca.ca/key.crt" -noout -text)"
+    verifyExtlist "$(openssl x509 -in "$ca.ca/key.crt" -noout -text)" "$ca"
 done
 
 # Verify level-2 (time) structure
 for ca in ${STRUCT_CAS}; do
     for i in $TIME_IDX; do
         . ../CAs/$ca
-        if [ "$ca" == "env" ]; then
-            CA_FILE=$year/ca/${ca}_${year}_${i}.ca/key.crt
-        else
-            CA_FILE=$year/ca/${ca}_${year}_${i}.crt
-        fi
+        CA_FILE=$year/ca/${ca}_${year}_${i}.crt
         time=${points[${i}]}
         timestamp=$(date --date="${time:0:2}/${time:2:2}/${year} 03:00:00 UTC" +"%s")
         verify "$CA_FILE" "$ca.ca/key.crt" "-attime ${timestamp}"
         EXT=`openssl x509 -in "$CA_FILE" -noout -text`
 
-        verifyExtlist "$EXT"
+        verifyExtlist "$EXT" "$ca-$i"
 
         echo "$EXT" | grep "Subject: " | grep "CN=$name" > /dev/null || error "Subject field did not verify"
 

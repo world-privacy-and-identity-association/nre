@@ -18,11 +18,6 @@ done
 
 cp -R ../profiles gigi-config/config
 
-mkdir -p gigi-config/keys
-for k in ${year}/keys/{api,mail,secure,static,www}.pkcs12; do
-   cp $k gigi-config/keys
-done
-
-tar czf gigi-$year.tar.gz -C gigi-config config keys
+tar czf gigi-$year.tar.gz -C gigi-config config
 
 rm -Rf gigi-config
