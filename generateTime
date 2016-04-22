@@ -44,12 +44,7 @@ for i in $TIME_IDX; do
         epoint=$((${year} + 2 ))${epoints[${i}]}
     fi
 
-    . ../CAs/env
-    genca "/CN=$name ${year}-${i}" $year/ca/env_${year}_${i}
-    genTimeCA $year/ca/env_${year}_${i}.ca/key env "$point" "$epoint"
-    
     for ca in $STRUCT_CAS; do
-        [ "$ca" == "env" ] && continue
         . ../CAs/$ca
         genKey "/CN=$name ${year}-${i}" $year/ca/${ca}_${year}_${i}
         genTimeCA $year/ca/${ca}_${year}_${i} $ca "$point" "$epoint"

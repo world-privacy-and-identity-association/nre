@@ -14,7 +14,6 @@ fetchCRLS(){ #year, cyear month timeIdx
     cyear=$2
     month=$3
     timeIdx=$4
-    cp -v $year/ca/env_${year}_${timeIdx}.ca/${cyear}_${month}.crl crls-${year}/$cyear-$month/${year}/env_${year}_${timeIdx}.crl
     # no "for ca in $STRUCT_CAs" because that's cassiopeias work.
 }
 
