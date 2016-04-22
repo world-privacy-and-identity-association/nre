@@ -8,12 +8,12 @@ cd generated
 
 mkdir -p htdocs/crt/g2/$year
 
-for ca in root $STRUCT_CAS; do
+for ca in root "${STRUCT_CAS[@]}"; do
     cp $ca.ca/key.crt htdocs/crt/g2/$ca.crt
 done
 
-for ca in $STRUCT_CAS; do
-    for i in $TIME_IDX; do
+for ca in "${STRUCT_CAS[@]}"; do
+    for i in "${TIME_IDX[@]}"; do
         cp $year/ca/${ca}_${year}_${i}.crt htdocs/crt/g2/$year/${ca}-${i}.crt
     done
 done

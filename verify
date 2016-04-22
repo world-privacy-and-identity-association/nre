@@ -42,14 +42,14 @@ verify root.ca/key.crt
 verifyExtlist "$(openssl x509 -in "root.ca/key.crt" -noout -text)" root
 
 # Verify level-1 structure
-for ca in $STRUCT_CAS; do
+for ca in "${STRUCT_CAS[@]}"; do
     verify $ca.ca/key.crt
     verifyExtlist "$(openssl x509 -in "$ca.ca/key.crt" -noout -text)" "$ca"
 done
 
 # Verify level-2 (time) structure
-for ca in ${STRUCT_CAS}; do
-    for i in $TIME_IDX; do
+for ca in "${STRUCT_CAS[@]}"; do
+    for i in "${TIME_IDX[@]}"; do
         . ../CAs/$ca
         CA_FILE=$year/ca/${ca}_${year}_${i}.crt
         time=${points[${i}]}

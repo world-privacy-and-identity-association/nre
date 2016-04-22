@@ -43,6 +43,6 @@ generateYearCRLs (){ #name idx
     done
 }
 generateCRLs root
-for ca in $STRUCT_CAS; do
+for ca in "${STRUCT_CAS[@]}"; do
     generateCRLs $ca
 done

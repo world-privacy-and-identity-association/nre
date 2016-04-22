@@ -35,7 +35,7 @@ TESTCA
 mkdir -p $year/ca
 
 
-for i in $TIME_IDX; do
+for i in "${TIME_IDX[@]}"; do
     point=${year}${points[${i}]}
     nextp=${points[$((${i} + 1))]}
     if [[ "$nextp" == "" ]]; then
@@ -44,7 +44,7 @@ for i in $TIME_IDX; do
         epoint=$((${year} + 2 ))${epoints[${i}]}
     fi
 
-    for ca in $STRUCT_CAS; do
+    for ca in "${STRUCT_CAS[@]}"; do
         . ../CAs/$ca
         genKey "/CN=$name ${year}-${i}" $year/ca/${ca}_${year}_${i}
         genTimeCA $year/ca/${ca}_${year}_${i} $ca "$point" "$epoint"

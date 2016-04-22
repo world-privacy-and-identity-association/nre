@@ -23,7 +23,7 @@ for month in {01..12}; do
     BASE=crls-${year}/$year-$month
     mkdir -p $BASE
     cp root.ca/${year}_${month}.crl $BASE/root.crl
-    for ca in $STRUCT_CAS; do
+    for ca in "${STRUCT_CAS[@]}"; do
         cp $ca.ca/${year}_${month}.crl $BASE/$ca.crl
     done
 done

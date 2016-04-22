@@ -56,7 +56,7 @@ genca "/CN=Cacert-gigi testCA" root
 rootSign root
 
 # generate the various sub-CAs
-for ca in $STRUCT_CAS; do
+for ca in "${STRUCT_CAS[@]}"; do
     . ../CAs/$ca
     genca "/CN=$name" $ca
     rootSign $ca

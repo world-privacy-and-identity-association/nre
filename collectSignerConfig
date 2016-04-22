@@ -8,8 +8,8 @@ year=$1
 cd generated
 
 mkdir -p signer-config
-for ca in $STRUCT_CAS; do
-    for i in $TIME_IDX; do
+for ca in "${STRUCT_CAS[@]}"; do
+    for i in "${TIME_IDX[@]}"; do
         mkdir -p signer-config/ca/${ca}_${year}_${i}
         cp ${year}/ca/${ca}_${year}_${i}.crt  signer-config/ca/${ca}_${year}_${i}/ca.crt
     done
@@ -19,8 +19,8 @@ tar czf signer-client-$year.tar.gz -C .. profiles -C generated/signer-config ca
 
 # Updating for server
 
-for ca in $STRUCT_CAS; do
-    for i in $TIME_IDX; do
+for ca in "${STRUCT_CAS[@]}"; do
+    for i in "${TIME_IDX[@]}"; do
         cp ${year}/ca/${ca}_${year}_${i}.key  signer-config/ca/${ca}_${year}_${i}/ca.key
     done
 done
