@@ -11,8 +11,6 @@ for arg in "$@"; do
     else
         echo "========== Generating Year $arg ======="
         ./generateTime "$arg"
-        echo "========== Generating Infra for Year $arg ======="
-        ./generateInfra "$arg"
         echo "========== Generating CRLs for Year $arg ======="
         ./generateCRLs "$arg"
         
