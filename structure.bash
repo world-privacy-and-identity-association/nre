@@ -5,8 +5,7 @@ PRIVATEPW="changeit"
 
 [ -f config ] && . ./config
 
-STRUCT_CAS=(env unassured assured codesign orga orgaSign)
-SERVER_KEYS=(api secure www static signer_server signer_client mail)
+STRUCT_CAS=(unassured assured codesign orga orgaSign)
 TIME_IDX=(1 2)
 points[1]="0101000000Z"
 points[2]="0601000000Z"
