@@ -9,14 +9,6 @@ year=$1
 . commonFunctions.bash
 cd generated
 
-fetchCRLS(){ #year, cyear month timeIdx
-    year=$1
-    cyear=$2
-    month=$3
-    timeIdx=$4
-    # no "for ca in $STRUCT_CAs" because that's cassiopeias work.
-}
-
 rm -Rf crls-${year}
 mkdir -p crls-${year}
 for month in {01..12}; do
@@ -26,32 +18,6 @@ for month in {01..12}; do
     for ca in "${STRUCT_CAS[@]}"; do
         cp $ca.ca/${year}_${month}.crl $BASE/$ca.crl
     done
-done
-
-cyear=$year
-for month in {01..12}; do
-    BASE=crls-${year}/$cyear-$month
-    mkdir -p $BASE/$year
-
-    fetchCRLS $year $cyear $month 1
-    [ "$month" -gt "6" ] && fetchCRLS $year $cyear $month 2
-done
-
-cyear=$((year+1))
-for month in {01..12}; do
-    BASE=crls-${year}/$cyear-$month
-    mkdir -p $BASE/$year
-
-    fetchCRLS $year $cyear $month 1
-    fetchCRLS $year $cyear $month 2
-done
-
-cyear=$((year+2))
-for month in {01..06}; do
-    BASE=crls-${year}/$cyear-$month
-    mkdir -p $BASE/$year
-
-    fetchCRLS $year $cyear $month 2
 done
 
 pushd crls-${year}
