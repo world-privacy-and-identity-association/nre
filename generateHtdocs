@@ -18,5 +18,5 @@ for ca in "${STRUCT_CAS[@]}"; do
     done
 done
 
-tar czf htdocs.tgz htdocs
+tar czf htdocs-${year}.tar.gz htdocs
 rm -R htdocs

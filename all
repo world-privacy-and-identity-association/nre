@@ -24,6 +24,7 @@ for arg in "$@"; do
         ./collectGigiConfig "$arg"
         ./collectOffline "$arg"
         ./collectSignerConfig "$arg"
+        ./generateHtdocs "$arg"
         
         ./summary "$arg"
     fi
