@@ -1,35 +1,41 @@
-# cacert-nre
+# NRE
 
-This is the a project that contains scripts to generate CAcerts new ( after 2015 ) root structure.
+This project is a collection of shell scripts to generate X.509 certificates suitable for operating a Certificate Authority.
+It is usually used in conjunction with *Cassiopeia* and *Gigi*.
 
-You can run the whole generation process for 2015 by invoking `./all root 2015`.
+To generate a root certificate and all intermediate certificates for the years 2017 and 2018, run `./all root 2017 2018`.
 
 ## Overview of Generating Shell Scripts
 
-The shellscripts that can be invoked (in order of `all`) are:
+The shell scripts that can be invoked (in order of `all`) are:
 
-* `clear` remove all previously generated keys
-* `generateKeys` generate the root certificate and structure certificates (levels 0 and 1)
-* `generateTime 2015` generate the sub-cas for the year 2015
-* `generateInfra 2015` generate the CAcert Infrastructure keys (gigi ssl, gigi smime, signer communication, ...)
-* `verify 2015` verify all keys for the year 2015
-* (optional) `generateSignerConfig 2015` generate config to be deployed on cassiopeia
+* `clear`: remove all previously generated keys
+* `generateKeys`: generate the root certificate and structure certificates (levels 0 and 1)
+* `generateTime 2017`: generate the sub-cas for one year
+* `generateInfra 2017`: generate the CA Infrastructure keys (Gigi TLS, Gigi S/MIME, communication with the signer, …) for one year
+* `verify 2017`: verify all keys for one year
+* (optional) `generateSignerConfig 2017`: generate config to be deployed on cassiopeia
 
-all these scripts depend on 2 'library-scripts':
+All of these scripts depend on 2 “library scripts”:
 
-* `commonFunctions.bash` functions used all over those scripts
-* `structure.bash` definitions of what cas and keys exist
+* `commonFunctions.bash`: functions used all over those scripts
+* `structure.bash`: definitions of which CAs and keys exist
 
 ## Other Files and Folders
 
-* `CAs` configuration per structure sub-ca
-* `profiles` configuration per certificate profile
-* `selfsign.config` config for the CAs maintained by this script-collection internally
+* `CAs`: configuration per structure sub-ca
+* `profiles`: configuration per certificate profile
+* `selfsign.config`: config for the CAs maintained by this script-collection internally
 
 ## Generated Files and Folders
-* `2015/ca` generated time-based subcas for 2015
-* `2015/keys` generated infrastructure keys for 2015
-* `{root,assured,unassured,...}.ca` root CAs
-* `*.ca/key.key` the CAs private key
-* `*.ca/key.crt` the CAs certificate
 
+The following files and directories are generated in the `generated/` directory.
+
+* `2017/ca`: generated time-based sub-certificates for one year
+* `2017/keys`: generated infrastructure keys for one year
+* `{root,assured,unassured,...}.ca/`: subdirectories for the individual certificates
+* `*.ca/key.key`: the certificate’s private key
+* `*.ca/key.crt`: the certificate’s certificate
+
+They are also bundled into several `*.tar.gz` files in the `generated/` directory,
+which are used by the `manager/` scripts in the *infra* project.

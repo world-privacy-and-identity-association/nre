@@ -51,7 +51,7 @@ TESTCA
 
 
 # Generate the super Root CA
-genca "/CN=Cacert-gigi testCA" root
+genca "/CN=Gigi testCA" root
 #echo openssl x509 -req $ROOT_VALIDITY -in root.ca/key.csr -signkey root.ca/key.key -out root.ca/key.crt -extfile ca.cnf
 rootSign root
 

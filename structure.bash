@@ -1,5 +1,5 @@
 #!/bin/bash
-DOMAIN="cacert.org"
+DOMAIN="wpia.local"
 KEYSIZE=4096
 PRIVATEPW="changeit"
 
