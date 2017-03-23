@@ -1,7 +1,10 @@
 #!/bin/bash
+APPNAME="SomeCA"
 DOMAIN="wpia.local"
+ORGANIZATION="Test Environment CA Ltd."
+ORGANIZATIONAL_UNIT="Test Environment CAs"
+COUNTRY="AT"
 KEYSIZE=4096
-PRIVATEPW="changeit"
 
 [ -f config ] && . ./config
 

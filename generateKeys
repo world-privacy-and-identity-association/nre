@@ -51,18 +51,15 @@ TESTCA
 
 
 # Generate the super Root CA
-genca "/CN=Gigi testCA" root
+genca "/CN=$APPNAME Root Certificate" root
 #echo openssl x509 -req $ROOT_VALIDITY -in root.ca/key.csr -signkey root.ca/key.key -out root.ca/key.crt -extfile ca.cnf
 rootSign root
 
 # generate the various sub-CAs
 for ca in "${STRUCT_CAS[@]}"; do
     . ../CAs/$ca
-    genca "/CN=$name" $ca
+    genca "/CN=$APPNAME $name Intermediate Certificate" $ca
     rootSign $ca
 done
 
 rm ca.cnf subca.cnf
-
-
-

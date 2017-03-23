@@ -4,6 +4,9 @@ This project is a collection of shell scripts to generate X.509 certificates sui
 It is usually used in conjunction with *Cassiopeia* and *Gigi*.
 
 To generate a root certificate and all intermediate certificates for the years 2017 and 2018, run `./all root 2017 2018`.
+To adjust the settings of the certificates (organization name, domain name, …),
+create a `config` file and set the appropriate variables;
+the `config.example` file documents the available variables.
 
 ## Overview of Generating Shell Scripts
 

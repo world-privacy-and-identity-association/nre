@@ -3,7 +3,7 @@
 
 genKey(){ #subj, internalName
     openssl genrsa -out $2.key ${KEYSIZE}
-    openssl req -new -key $2.key -out $2.csr -subj "$1/O=Test Environment CA Ltd./OU=Test Environment CAs/C=AU"
+    openssl req -new -key $2.key -out $2.csr -subj "$1/O=$ORGANIZATION/OU=$ORGANIZATIONAL_UNIT/C=$COUNTRY"
 
 }
 
@@ -49,4 +49,3 @@ findLibfaketime() {
     printf >&2 'error: no libfaketime found\n'
     exit 1 # unfortunately, this will only exit the $() subshell
 }
-

@@ -1,0 +1,7 @@
+# You can adjust the following variables:
+# APPNAME="Your CA name" # used in the Common Name (CN=) of all certificates
+# DOMAIN="example.com" # the main domain of your CA
+# ORGANIZATION="Your Organization Name" # legal name of your organization, the O= of all certificates
+# ORGANIZATIONAL_UNIT="Your Organizational Unit" # name of your organizational unit, the OU= of all certificates
+# COUNTRY="AT" # the country of your organization, the C= of all certificates
+# KEYSIZE=4096 # default is probably fine
