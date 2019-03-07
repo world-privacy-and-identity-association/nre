@@ -36,13 +36,30 @@ mkdir -p $year/ca
 
 
 for i in "${TIME_IDX[@]}"; do
-    point=${year}${points[${i}]}
     nextp=${points[$((${i} + 1))]}
-    if [[ "$nextp" == "" ]]; then
-        epoint=$((${year} + 3 ))${epoints[${i}]}
+    # adjustment of year according to RFC 5280 GeneralizedTime (>=2050) and UTCTime (<2050)
+    if (( year >= 2050 )); then
+        yearT=$year
     else
-        epoint=$((${year} + 2 ))${epoints[${i}]}
+        yearT=$((year - 2000))
     fi
+
+   point=${yearT}${points[${i}]}
+
+    if [[ "$nextp" == "" ]]; then
+        eyear=$(( year + 3 ))
+    else
+        eyear=$(( year + 2 ))
+    fi
+
+    if (( eyear >= 2050 )); then
+        eyearT=$eyear
+    else
+        eyearT=$((eyear - 2000))
+    fi
+
+
+    epoint=${eyearT}${epoints[${i}]}
 
     for ca in "${STRUCT_CAS[@]}"; do
         . ../CAs/$ca
