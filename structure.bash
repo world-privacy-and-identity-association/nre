@@ -11,7 +11,7 @@ KEYSIZE=4096
 STRUCT_CAS=(unassured assured codesign orga orgaSign)
 TIME_IDX=(1 2)
 points[1]="0101000000Z"
-points[2]="0601000000Z"
+points[2]="0701000000Z"
 
 epoints[1]="0705000000Z"
 epoints[2]="0105000000Z"
